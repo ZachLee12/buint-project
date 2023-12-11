@@ -10,6 +10,7 @@ library(lubridate)
 ##############################
 #       Loading Data         #
 ##############################
+write.csv(tf_vaccinations, "/Users/vanessa/Documents/HSLU/Semester_5/BUINT/BI_Project/tf_vaccinations.csv", row.names = FALSE)
 
 # Upload the CSV files and convert the dates immediately to ensure format consistency
 ds_vaccinations_india <- read.csv("original_vaccinations_india.csv") %>%
