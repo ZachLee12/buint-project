@@ -218,7 +218,7 @@ ggsave(cummulative_vaccination_file_path, cumulative_vaccination_plot, width = 1
 
 people_vaccinationed <- tf_vaccinations$people_vaccinated
 
-# NEWWWWWWWWWWWWWWWWWWWWWWWWWWW
+# People Vaccinated for Each Year-Month
 people_vaccinationed_plot <- ggplot(tf_vaccinations, aes(x = YearMonth, y = people_vaccinationed, fill = Location)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   labs(title = "People Vaccnated by Year-Month in India and Italy", x = "Year-Month", y = "People Vaccination", fill = "Location") +
