@@ -6,25 +6,30 @@ library(ggplot2)
 library(readr)
 library(lubridate)
 
+#############################
+#         File Paths        #
+#############################
+ds
+
+
 
 ##############################
 #       Loading Data         #
 ##############################
-write.csv(tf_vaccinations, "/Users/vanessa/Documents/HSLU/Semester_5/BUINT/BI_Project/tf_vaccinations.csv", row.names = FALSE)
 
 # Upload the CSV files and convert the dates immediately to ensure format consistency
-ds_vaccinations_india <- read.csv("original_vaccinations_india.csv") %>%
+ds_vaccinations_india <- read.csv(sprintf("%s/datasets/original/vaccinations/original_vaccinations_india.csv", getwd())) %>%
   mutate(date = as.Date(date, format = "%Y-%m-%d"))
 
 # Upload the CSV files and convert the dates immediately to ensure format consistency
-ds_vaccinations_italy <- read.csv("original_vaccinations_italy.csv") %>%
+ds_vaccinations_italy <- read.csv(sprintf("%s/datasets/original/vaccinations/original_vaccinations_italy.csv", getwd())) %>%
   mutate(date = as.Date(date, format = "%Y-%m-%d"))
 
 # Upload the CSV files and convert the dates immediately to ensure format consistency
-ds_covidCases_global <- read.csv("original_covidCases_global.csv")
+ds_covidCases_global <- read.csv(sprintf("%s/datasets/original/cases/original_covidCases_global.csv", getwd()))
 
 # Source: https://data.oecd.org/pop/population.html
-ds_population_data <- read.csv("original_oecd_population_data.csv")
+ds_population_data <- read.csv(sprintf("%s/datasets/original/population/original_oecd_population_data.csv", getwd()))
 
 
 ##############################
@@ -170,7 +175,7 @@ tf_vaccinations <- tf_vaccinations %>%
     Booster_Shot_Rate = ifelse(people_fully_vaccinated > 0, (total_boosters / people_fully_vaccinated) * 100, 0) # as a percentage
   )
 
-
+write.csv(tf_vaccinations, file = sprintf("%s/datasets/original/tf_vaccinations.csv", getwd()), row.names = FALSE)
 
 ##############################
 #       Plotting Data        #
@@ -208,3 +213,14 @@ cumulative_vaccination_plot <- ggplot(tf_vaccinations, aes(x = YearMonth, y = Cu
   theme(axis.text.x = element_text(angle = 90, hjust = 1)) # Rotate x-axis labels for readability
 
 ggsave("two.jpg", cumulative_vaccination_plot, width = 10, height = 6)
+
+people_vaccinationed <- tf_vaccinations$people_vaccinated
+
+# NEWWWWWWWWWWWWWWWWWWWWWWWWWWW
+people_vaccinationed_plot <- ggplot(tf_vaccinations, aes(x = YearMonth, y = people_vaccinationed, fill = Location)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  labs(title = "People Vaccnated by Year-Month in India and Italy", x = "Year-Month", y = "People Vaccination", fill = "Location") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) # Rotate x-axis labels for readability
+
+ggsave("TEST.jpg", people_vaccinationed_plot, width = 10, height = 6)
