@@ -7,9 +7,11 @@ library(readr)
 library(lubridate)
 
 #############################
-#         File Paths        #
+#       Configurations      #
 #############################
-ds
+people_vaccinated_plot_file_path <- sprintf("%s/results/descriptive/people_vaccinated_plot.jpg", getwd())
+vaccination_metrics_plot_file_path <- sprintf("%s/results/descriptive/vaccination_metrics_plot.jpg", getwd())
+cummulative_vaccination_file_path <- sprintf("%s/results/descriptive/cummulative_vaccination.jpg", getwd())
 
 
 
@@ -198,7 +200,7 @@ vaccination_metrics_plot <- ggplot(tf_vaccinations_long, aes(x = Date, y = Value
   labs(title = "Vaccination Metrics Over Time", x = "Date", y = "Value") +
   theme_minimal()
 
-ggsave("one.jpg", vaccination_metrics_plot, width = 10, height = 6)
+ggsave(vaccination_metrics_plot_file_path, vaccination_metrics_plot, width = 10, height = 6)
 
 
 # Order data by YearMonth
@@ -212,7 +214,7 @@ cumulative_vaccination_plot <- ggplot(tf_vaccinations, aes(x = YearMonth, y = Cu
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 90, hjust = 1)) # Rotate x-axis labels for readability
 
-ggsave("two.jpg", cumulative_vaccination_plot, width = 10, height = 6)
+ggsave(cummulative_vaccination_file_path, cumulative_vaccination_plot, width = 10, height = 6)
 
 people_vaccinationed <- tf_vaccinations$people_vaccinated
 
@@ -223,4 +225,4 @@ people_vaccinationed_plot <- ggplot(tf_vaccinations, aes(x = YearMonth, y = peop
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 90, hjust = 1)) # Rotate x-axis labels for readability
 
-ggsave("TEST.jpg", people_vaccinationed_plot, width = 10, height = 6)
+ggsave(people_vaccinated_plot_file_path, people_vaccinationed_plot, width = 10, height = 6)
